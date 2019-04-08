@@ -8,58 +8,24 @@ import java.util.ArrayList;
 
 import product.NewProduct;
 
-public class ProductDao {
+public class ProductDao extends BaseDao{
 
 	// 插入
 	public void save(NewProduct npro) {
-		Connection conn = JdbcUtils.getConnection();
-		try {
-			PreparedStatement pre = conn.prepareStatement("insert into product(name,price,remark) value(?,?,?)");
-			pre.setString(1, npro.getName());
-			pre.setDouble(2, npro.getPrice());
-			pre.setString(3, npro.getRemark());
-			pre.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}finally {
-			System.out.println("关闭数据库连接都会执行....");
-			JdbcUtils.closeDbConn(conn);
-		}
+		String sql="insert into product (name,price,remark) values (?,?,?)";
+		super.update(sql, new Object[] {npro.getName(),npro.getPrice(),npro.getRemark()});
 	}
 
 	// 更新
 	public void update(NewProduct nPro0) {
-		Connection conn0 = JdbcUtils.getConnection();
-		try {
-			PreparedStatement pre = conn0.prepareStatement("update product set name=?,price=?,remark=? where id=?");
-			pre.setString(1, nPro0.getName());
-			pre.setDouble(2, nPro0.getPrice());
-			pre.setString(3, nPro0.getRemark());
-			pre.setInt(4, nPro0.getId());
-			pre.executeUpdate();
-			System.out.println("更新成功....");
-		} catch (SQLException e) {
-			System.out.println("更新异常....");
-			throw new RuntimeException(e);
-		} finally {
-			System.out.println("0.关闭数据库连接都会执行....");
-			JdbcUtils.closeDbConn(conn0);
-		}
+		String sql="update product set name=?,price=?,remark=? where id=?";
+		super.update(sql, new Object[] {nPro0.getName(),nPro0.getPrice(),nPro0.getRemark(),nPro0.getId()});
 	}
 
 	// 删除
 	public void delete(int id) {
-		Connection conn1 = JdbcUtils.getConnection();
-		try {
-			PreparedStatement pre = conn1.prepareStatement("delete from product where id = ?");
-			pre.setInt(1, id);
-			pre.executeUpdate();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			System.out.println("1.关闭数据库连接都会执行....");
-			JdbcUtils.closeDbConn(conn1);
-		}
+		String sql="delete from product where id = ?";
+		super.update(sql, new Object[] {id});
 	}
 
 	// 查询有两种，根据name/price查询

@@ -37,7 +37,7 @@ private ProductService productService =new ProductService();
 //		2.Servlet---Service---Dao 最终完成数据库的入库
 		productService.save(newProduct);
 //		3.跳转到查询页面
-		response.sendRedirect("/web/query.jsp");
+		response.sendRedirect("${pageContext.request.contextPath}/query.jsp");
 	}else if (type.equals("query")){
 //        1、request从前端获取数据
         String keyword=request.getParameter("keyword");
@@ -45,18 +45,26 @@ private ProductService productService =new ProductService();
        ArrayList<NewProduct> proList=productService.queryByName(keyword);
 //      3、重定向
        request.setAttribute("proList", proList);
-//     response.sendRedirect("/web/query.jsp");
+//     response.sendRedirect("${pageContext.request.contextPath}/query.jsp");
 //     请求的转发
        RequestDispatcher requestDispatcher=request.getRequestDispatcher("/query.jsp");
        requestDispatcher.forward(request, response);
 	}else if (type.equals("getById")){
-	int id=Integer.parseInt(request.getParameter("id"));
-	NewProduct product=productService.getById(id);
-	request.setAttribute("product", product);
-	RequestDispatcher requestDispatcher = request.getRequestDispatcher("/update.jsp");
-	requestDispatcher.forward(request, response);
+		int id=Integer.parseInt(request.getParameter("id"));
+		NewProduct product=productService.getById(id);
+		request.setAttribute("product", product);
+		RequestDispatcher requestDispatcher = request.getRequestDispatcher("/update.jsp");
+		requestDispatcher.forward(request, response);
 	}else if (type.equals("update")) {
-		
+		NewProduct product = new NewProduct();
+		product.setName(request.getParameter("name"));
+		String price = request.getParameter("price");
+		product.setId(Integer.parseInt(request.getParameter("id")));
+		product.setPrice(Double.parseDouble(price));
+		product.setRemark(request.getParameter("remark"));
+		productService.update(product);
+		// 3: 重定向到查询页面
+		response.sendRedirect(request.getContextPath() + "/query.jsp");
 	}
 	else {
 		System.out.println("删除操作");

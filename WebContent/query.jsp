@@ -8,7 +8,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
-<script type="text/javascript" src="/web/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript">
 $(function(){
 
@@ -23,7 +23,7 @@ $(function(){
 </head>
 <body>
   <!-- http请求只有两种 ，get请求信息时通过url地址传输-->
-  <form action="/web/ProductServlet" method="get">
+  <form action="${pageContext.request.contextPath}/ProductServlet" method="get">
     给我搜：<input type="text" name="keyword"/><button type="submit">搜索</button>
   <input type="hidden" name="type" value="query"/>
   </form>
@@ -45,7 +45,7 @@ $(function(){
         <td>${product.remark}</td>
         <td>
         <button type="button" class="btnDel" lang="${product.id}">AJAX删除</button>
-        |<a href="/web/ProductServlet?type=getById&id=${product.id}">查询后更新</a></td>
+        |<a href="${pageContext.request.contextPath}/ProductServlet?type=getById&id=${product.id}">查询后更新</a></td>
      </tr>
    </c:forEach>
 </table>

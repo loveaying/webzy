@@ -9,7 +9,7 @@
 <body>
  <!-- 创建一个from表单
     -->
-   <form action="/web/ProductServlet" method="post">
+   <form action="${pageContext.request.contextPath}/ProductServlet" method="post">
         商品名称：<input type="text" name="name" value="${requestScope.product.name}"/><br />
         商品价格：<input type="text" name="price" value="${requestScope.product.price}"/><br />
         详细介绍：<textarea name="remark" rows="3" cols=50>${requestScope.product.remark}</textarea><br />

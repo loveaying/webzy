@@ -17,7 +17,7 @@ public class ProductService {
 	}
 
 	public void update(NewProduct newProduct) {
-		productDao.save(newProduct);
+		productDao.update(newProduct);
 	}
 	
 	public NewProduct getById(int id) {
